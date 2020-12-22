@@ -23,6 +23,19 @@
 [![Build Status](https://travis-ci.org/apache/cordova-android.svg?branch=master)](https://travis-ci.org/apache/cordova-android)
 [![codecov.io](https://codecov.io/github/apache/cordova-android/coverage.svg?branch=master)](https://codecov.io/github/apache/cordova-android?branch=master)
 
+# Simplifield Cordova Android fork of 8.1.0
+We forked this repo in order to introduce a solution for work with storage on Android10+
+The latest v9 version that supports Android 10 sdk v29 - introduced many changes that brake some other plugins on sf-mobile.
+But without using sdk 29 we can't add a new policy introduced in Android 10.
+
+In cordova/android maximum sdk version is hardcoded. So even bumping in in config.xml won't work.
+So the first fix - update max sdk version from  28 to 29
+
+To use new storage a new option should be added to the manifest `android:requestLegacyExternalStorage="true"`
+Telerik/ImagePicker v2.3.6 introduce it. But in a runtime ImagePicker is failed due to manifest update errors
+Seems edit-config option for this storage update makes manifest file failed, so even updating to cordova/android v9 could fail.
+So here `android:requestLegacyExternalStorage="true"` is added manually. And now ImagePicker (and other plugins that require an access to the device storage) works fine on Android 10 and 11.
+
 # Cordova Android
 
 Cordova Android is an Android application library that allows for Cordova-based
